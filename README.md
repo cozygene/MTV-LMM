@@ -25,7 +25,7 @@ Running MTV_LMM - Time_explainability
 #Step 1 : Data pre-processing, creating the the kinship matrices, creating the fixed effects files and the target files
 (relative abundance per OTU) - step 1 in 'Main_MTV_LMM_TE.R' 
 
-#Step 2 : Applying LMM with reml using GCTA software - step 2 using 'run_mgrm.sh' 
+#Step 2 : Applying LMM with reml using GCTA software -  using 'run_mgrm.sh' 
 
 #Step 3 : Calculating the 'Time-explainability for each OTU - step 3 in 'Main_MTV_LMM_TE.R' 
 
@@ -35,7 +35,7 @@ Running MTV_LMM - Prediction
 --------------------------
 #Step 1 : Data pre-processing, creating the the kinship matrices, creating the fixed effects files and the target files (relative abundance per OTU)- step 1 in 'Main_MTV_LMM_Prediction.R'
 
-#Step 2 : Iteratively applying LMM with reml using GCTA software - step 2 using 'run_predictions.sh' (GCTA)
+#Step 2 : Iteratively applying LMM with reml using GCTA software - using 'run_predictions.sh' (GCTA)
 
 #Step 3 : Generating predictions using BLUP - step 3 in 'Main_MTV_LMM_Prediction.R'
 
