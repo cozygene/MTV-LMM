@@ -21,7 +21,7 @@ The MTV-LMM package contains:
 - run_predictions.sh : Shell code, running GCTA software  as part of the prediction generation.
 
 
-Running MTV_LMM - Time_explainability
+Running MTV_LMM - Time_explainability (identifying auto-regressive OTUs)
 --------------------------
 #Step 1 : Data pre-processing, creating the the kinship matrices, creating the fixed effects files and the target files
 (relative abundance per OTU) - step 1 in 'Main_MTV_LMM_TE.R' 
@@ -32,7 +32,7 @@ Running MTV_LMM - Time_explainability
 
 
 
-Running MTV_LMM - Prediction
+Running MTV_LMM - Prediction (predicting auto-regressive OTUs)
 --------------------------
 #Step 1 : Data pre-processing, creating the the kinship matrices, creating the fixed effects files and the target files (relative abundance per OTU)- step 1 in 'Main_MTV_LMM_Prediction.R'
 
