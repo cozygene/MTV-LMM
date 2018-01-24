@@ -31,7 +31,7 @@ Running MTV_LMM - Time_explainability
 
 
 
-Running MTV_LMM - Time_explainability
+Running MTV_LMM - Prediction
 --------------------------
 #Step 1 : Data pre-processing, creating the the kinship matrices, creating the fixed effects files and the target files (relative abundance per OTU)- step 1 in 'Main_MTV_LMM_Prediction.R'
 
