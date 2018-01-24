@@ -1,5 +1,6 @@
-# MTV_LMM - Modeling the temporal dynamics of the gut microbial community in adults and infants
+# MTV_LMM
 
+Modeling the temporal dynamics of the gut microbial community in adults and infants
 
 Software Requirements:
 -----------------------
