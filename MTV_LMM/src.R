@@ -748,7 +748,7 @@ create_mgrm_file <- function(t_min, t_max, num_GRM, saving_path, prediction_flag
       tmp = c()
       for(i in 1:num_GRM){
         
-        GRM[k,i] = paste("Data_files/GRM_files/GRM_3_bins__",i,"_",t_data[k], sep = "")
+        GRM[k,i] = paste("Data_files/GRM_files_pred/GRM_3_bins__",i,"_",t_data[k], sep = "")
         tmp = rbind(tmp, GRM[k,i]) 
       }
       
@@ -762,7 +762,7 @@ create_mgrm_file <- function(t_min, t_max, num_GRM, saving_path, prediction_flag
     tmp = c()
     for(i in 1:num_GRM){
       
-      GRM[1,i] = paste("GRM_3_bins_",i, sep = "")
+      GRM[1,i] = paste("Data_files/GRM_files/GRM_3_bins_",i, sep = "")
       tmp = rbind(tmp, GRM[1,i]) 
     }
     
@@ -774,22 +774,22 @@ create_mgrm_file <- function(t_min, t_max, num_GRM, saving_path, prediction_flag
 
 #Parse hsq files from GCTA
 Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var_comp_num, 
-                                          Refactor_flag, data=NULL, individuals = All_individuals, fixed_effect_flag = 1, ind_1){
+                                          Refactor_flag, data=NULL, individuals = All_individuals, 
+                                          fixed_effect_flag = 1, 
+                                          config = c("1_GRM_FF", "1_GRM", "2_GRM_FF", "2_GRM")){
   
-
+  if( any(config == c("2_GRM_FF" , "2_GRM" , "1_GRM_FF" , "1_GRM")) == FALSE ) {
+    
+    stop("Please provide one of the following config values - 2_GRM_FF, 2_GRM, 1_GRM_FF, 1_GRM" )
+  }
+  
+  
   setwd(path_hsq_files)
   
-  if(var_comp_num == 1 & fixed_effect_flag == 1)
-    OTU_data = array(NA, dim = c(13, 3, num_otus))
+  if(Fixed_effect_flag == 1 & any(config == c("1_GRM", "2_GRM", "3_GRM"))){
+    stop("Discrepancy between 'Fixed_effect_flag' and 'config' values")
+  }
   
-  if(var_comp_num == 1 & fixed_effect_flag == 0)
-    OTU_data = array(NA, dim = c(10, 3, num_otus))
-  
-  if(var_comp_num == 2)
-    OTU_data = array(NA, dim = c(13, 3, num_otus))
-  
-  if(var_comp_num == "mixed")
-    OTU_data = array(NA, dim = c(13, 3, num_otus))
   
   files <- list.files(path=path_hsq_files, pattern="*.hsq", full.names=T, recursive=FALSE)
   
@@ -803,24 +803,15 @@ Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var
   
   index = sort(index)
   
+  OTU_data = list()
+  
   k = 1
   for(i in na.omit(index)){
     
-    temp =  as.matrix(read.table(paste(hsq_txt ,i,".hsq", sep = ""), sep = "\t", fill = T, header = T))
+    OTU_data[[k]] = as.matrix(read.table(paste(hsq_txt ,i,".hsq", sep = ""), sep = "\t", fill = T, header = T))
     
-    if(dim(temp)[1] == 13)
-      OTU_data[,,k] = as.matrix(read.table(paste(hsq_txt ,i,".hsq", sep = ""), sep = "\t", fill = T, header = T))
-    else{
-      
-      temp = rbind(temp, matrix(rep(NA, 9), ncol = 3))
-      colnames(temp) = c("Source", "Variance", "SE")
-      OTU_data[,,k] = temp
-      
-    }
     k = k+1
   }
-  
-  index_1 = which(index %in% ind_1)
   
   hsq_time = c()
   p_val_hsq  = c()
@@ -833,130 +824,122 @@ Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var
   hsq_ind = c()
   se_hsq_ind = c()
   
-  if(var_comp_num == 1 & fixed_effect_flag == 1){
+  if(config == "1_GRM_FF"){
     
     for(j in 1:num_otus){
       
-      hsq_time[j] = as.numeric(OTU_data[4,2,j])
-      se_hsq_time[j] = as.numeric(OTU_data[4,3,j])
-      p_val_hsq[j] = as.numeric(OTU_data[9,2,j])
-      intercept[j] = as.numeric(OTU_data[12,1,j])
-      fixed_effect[j] = as.numeric(OTU_data[13,1,j])
-      logL0[j] = as.numeric(OTU_data[6,2,j])
-      logL[j] = as.numeric(OTU_data[5,2,j])
+      hsq_time[j] = as.numeric(OTU_data[[j]][4,2])
+      se_hsq_time[j] = as.numeric(OTU_data[[j]][4,3])
+      
+      fixed_effect[j] = as.numeric(OTU_data[[j]][13,1])
+      intercept[j] = as.numeric(OTU_data[[j]][12,1])
+      
+      p_val_hsq[j] = as.numeric(OTU_data[[j]][9,2])
+      logL0[j] = as.numeric(OTU_data[[j]][6,2])
+      logL[j] = as.numeric(OTU_data[[j]][5,2])
     }
+    
+    hsq_data = data.frame( hsq_time, se_hsq_time, p_val_hsq,intercept, fixed_effect, logL0, logL, c(1:num_otus), index)
   }
   
-  if(var_comp_num == 1 & fixed_effect_flag == 0){
+  if(config == "1_GRM"){
     
     for(j in 1:num_otus){
       
-      hsq_time[j] = as.numeric(OTU_data[4,2,j])
-      se_hsq_time[j] = as.numeric(OTU_data[4,3,j])
-      p_val_hsq[j] = as.numeric(OTU_data[9,2,j])
-      logL0[j] = as.numeric(OTU_data[6,2,j])
-      logL[j] = as.numeric(OTU_data[5,2,j])
+      hsq_time[j] = as.numeric(OTU_data[[j]][4,2])
+      se_hsq_time[j] = as.numeric(OTU_data[[j]][4,3])
+      
+      p_val_hsq[j] = as.numeric(OTU_data[[j]][9,2])
+      logL0[j] = as.numeric(OTU_data[[j]][6,2])
+      logL[j] = as.numeric(OTU_data[[j]][5,2])
     }
+    
+    hsq_data = data.frame( hsq_time, se_hsq_time,  p_val_hsq, logL0, logL, c(1:num_otus), index)
   }
   
-  
-  if(var_comp_num == 2 & fixed_effect_flag == 1){
+  if(config == "2_GRM_FF"){
     
     for(j in 1:num_otus){
       
-      hsq_time[j] = as.numeric(OTU_data[4,2,j])
-      se_hsq_time[j] = as.numeric(OTU_data[4,3,j])
-      p_val_hsq[j] = as.numeric(OTU_data[9,2,j])
-      intercept[j] = as.numeric(OTU_data[12,1,j])
-      fixed_effect[j] = as.numeric(OTU_data[13,1,j])
-      logL0[j] = as.numeric(OTU_data[6,2,j])
-      logL[j] = as.numeric(OTU_data[5,2,j])
+      hsq_time[j] = as.numeric(OTU_data[[j]][5,2])
+      se_hsq_time[j] = as.numeric(OTU_data[[j]][5,3])
+      
+      hsq_ind[j] = as.numeric(OTU_data[[j]][6,2])
+      se_hsq_ind[j] = as.numeric(OTU_data[[j]][6,3])
+      fixed_effect[j] = as.numeric(OTU_data[[j]][16,1])
+      intercept[j] = as.numeric(OTU_data[[j]][15,1])
+      
+      p_val_hsq[j] = as.numeric(OTU_data[[j]][12,2])
+      logL0[j] = as.numeric(OTU_data[[j]][9,2])
+      logL[j] = as.numeric(OTU_data[[j]][8,2])
     }
+    
+    hsq_data = data.frame( hsq_time, se_hsq_time, p_val_hsq,intercept, fixed_effect, logL0, logL, c(1:num_otus), index)
   }
   
-  if(var_comp_num == 2 & fixed_effect_flag == 0){
+  if(config == "2_GRM"){
     
     for(j in 1:num_otus){
       
-      hsq_time[j] = as.numeric(OTU_data[5,2,j])
-      se_hsq_time[j] = as.numeric(OTU_data[5,3,j])
+      hsq_time[j] = as.numeric(OTU_data[[j]][5,2])
+      se_hsq_time[j] = as.numeric(OTU_data[[j]][5,3])
       
-      hsq_ind[j] = as.numeric(OTU_data[6,2,j])
-      se_hsq_ind[j] = as.numeric(OTU_data[6,3,j])
+      hsq_ind[j] = as.numeric(OTU_data[[j]][6,2])
+      se_hsq_ind[j] = as.numeric(OTU_data[[j]][6,3])
       
-      p_val_hsq[j] = as.numeric(OTU_data[12,2,j])
-      logL0[j] = as.numeric(OTU_data[9,2,j])
-      logL[j] = as.numeric(OTU_data[8,2,j])
+      p_val_hsq[j] = as.numeric(OTU_data[[j]][12,2])
+      logL0[j] = as.numeric(OTU_data[[j]][9,2])
+      logL[j] = as.numeric(OTU_data[[j]][8,2])
     }
+    
+    hsq_data = data.frame( hsq_time, se_hsq_time, hsq_ind, se_hsq_ind,  p_val_hsq, logL0, logL, c(1:num_otus), index)
   }
   
-  if(var_comp_num == "mixed" & fixed_effect_flag == 0){
+  if(config == "3_GRM_FF"){
     
     for(j in 1:num_otus){
       
-      if(j %in% index_1){
-        
-        hsq_time[j] = as.numeric(OTU_data[4,2,j])
-        se_hsq_time[j] = as.numeric(OTU_data[4,3,j])
-        p_val_hsq[j] = as.numeric(OTU_data[9,2,j])
-        logL0[j] = as.numeric(OTU_data[6,2,j])
-        logL[j] = as.numeric(OTU_data[5,2,j])
-      }
+      hsq_time_1[j] = as.numeric(OTU_data[[j]][6,2])
+      se_hsq_time_1[j] = as.numeric(OTU_data[[j]][6,3])
       
-      else{
-        
-        hsq_time[j] = as.numeric(OTU_data[5,2,j])
-        se_hsq_time[j] = as.numeric(OTU_data[5,3,j])
-        
-        hsq_ind[j] = as.numeric(OTU_data[6,2,j])
-        se_hsq_ind[j] = as.numeric(OTU_data[6,3,j])
-        
-        p_val_hsq[j] = as.numeric(OTU_data[12,2,j])
-        logL0[j] = as.numeric(OTU_data[9,2,j])
-        logL[j] = as.numeric(OTU_data[8,2,j])
-      }
+      hsq_time_2[j] = as.numeric(OTU_data[[j]][7,2])
+      se_hsq_time_2[j] = as.numeric(OTU_data[[j]][7,3])
       
+      hsq_ind[j] = as.numeric(OTU_data[[j]][8,2])
+      se_hsq_ind[j] = as.numeric(OTU_data[[j]][8,3])
+      fixed_effect[j] = as.numeric(OTU_data[[j]][18,1])
+      intercept[j] = as.numeric(OTU_data[[j]][17,1])
+      
+      p_val_hsq[j] = as.numeric(OTU_data[[j]][14,2])
+      logL0[j] = as.numeric(OTU_data[[j]][11,2])
+      logL[j] = as.numeric(OTU_data[[j]][10,2])
     }
+    
+    hsq_data = data.frame( hsq_time_1, se_hsq_time_1, 
+                           hsq_time_2, se_hsq_time_2,
+                           p_val_hsq,intercept, fixed_effect, logL0, logL, c(1:num_otus), index)
   }
   
-  if(length(data) == 0){
-    
-    X_start = 1
-    two_len = c()
+  if(config == "3_GRM"){
     
     for(j in 1:num_otus){
       
-      y_train = as.numeric(create_y_vec(data = data, individuals = individuals, start = X_start+1, feature = index[j]))
+      hsq_time_1[j] = as.numeric(OTU_data[[j]][6,2])
+      se_hsq_time_1[j] = as.numeric(OTU_data[[j]][6,3])
       
-      two_len[j] = length(y_train[ y_train == 2])
+      hsq_time_2[j] = as.numeric(OTU_data[[j]][7,2])
+      se_hsq_time_2[j] = as.numeric(OTU_data[[j]][7,3])
       
+      hsq_ind[j] = as.numeric(OTU_data[[j]][8,2])
+      se_hsq_ind[j] = as.numeric(OTU_data[[j]][8,3])
       
+      p_val_hsq[j] = as.numeric(OTU_data[[j]][14,2])
+      logL0[j] = as.numeric(OTU_data[[j]][11,2])
+      logL[j] = as.numeric(OTU_data[[j]][10,2])
     }
     
-    if(var_comp_num == 1)
-      hsq_data = data.frame( na.omit(two_len), hsq_time, se_hsq_time, p_val_hsq)
-    if(var_comp_num == 2)
-      hsq_data = data.frame( na.omit(two_len), hsq_time, se_hsq_time, hsq_individual, p_val_hsq, c(1:num_otus), index)
-    
+    hsq_data = data.frame( hsq_time_1, se_hsq_time_1, hsq_time_2, se_hsq_time_2, hsq_ind, se_hsq_ind,  p_val_hsq, logL0, logL, c(1:num_otus), index)
   }
-  
-  else{
-    
-    if(var_comp_num == 1 & fixed_effect_flag == 1)
-      hsq_data = data.frame( hsq_time, se_hsq_time, p_val_hsq,intercept, fixed_effect, logL0, logL, c(1:num_otus), index)
-    if(var_comp_num == 1 & fixed_effect_flag == 0)
-      hsq_data = data.frame( hsq_time, se_hsq_time,  p_val_hsq, logL0, logL, c(1:num_otus), index)
-    if(var_comp_num == 2 & fixed_effect_flag == 1)
-      hsq_data = data.frame( hsq_time, se_hsq_time, p_val_hsq,intercept, fixed_effect, logL0, logL, c(1:num_otus), index)
-    if(var_comp_num == 2 & fixed_effect_flag == 0)
-      hsq_data = data.frame( hsq_time, se_hsq_time, hsq_ind, se_hsq_ind,  p_val_hsq, logL0, logL, c(1:num_otus), index)
-    if(var_comp_num == "mixed" & fixed_effect_flag == 0)
-      hsq_data = data.frame( hsq_time, se_hsq_time, hsq_ind, se_hsq_ind,  p_val_hsq, logL0, logL, c(1:num_otus), index)
-    
-  }
-  
-  # hsq_data = hsq_data[order(hsq_data$hsq_time),]
-  
   
   
   return(hsq_data)
@@ -972,11 +955,11 @@ Calculate_TE_func <- function(path_hsq_files,
   files <- list.files(path=path_hsq_files, pattern="*.hsq", full.names=T, recursive=FALSE)
   N = length(files)
   
-  hsq_data_NEW = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
-                                               hsq_txt = "GRM_OTUs_reml__", 
-                                               num_otus = N, var_comp_num = var_comp_num, 
-                                               data = Data, individuals = All_individuals, fixed_effect_flag = fixed_effect_flag,
-                                               ind_1 = ind_1)
+  hsq_data_NEW =   Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
+                                                 hsq_txt = "GRM_OTUs_reml__", 
+                                                 num_otus = N, config = config, 
+                                                 individuals = 1)
+
   
   
   
@@ -988,11 +971,15 @@ Calculate_TE_func <- function(path_hsq_files,
 Prediction_function <- function(X_train_data, Data, 
                                 index, OTU, X_start, T_start, END = 5, All_individuals,
                                 path_hsq_files, path_fixed_effect = NULL, norm_flag = 0, Fixed_effect_flag = 0,
-                                fixed_effect_file = "prev_t_1_times__", plot_flag = 0){
-  
-  
+                                fixed_effect_file = "prev_t_1_times__", plot_flag = 0, config = "2_GRM_FF"){
+
   
   path_hsq_files = paste(path_hsq_files ,OTU, sep = "")
+  
+  if( any(config == c("2_GRM_FF" , "2_GRM" , "1_GRM_FF" , "1_GRM")) == FALSE ) {
+    
+    print("error - please provide one of the following config values - 2_GRM_FF, 2_GRM, 1_GRM_FF, 1_GRM" )
+  }
   
   if(Fixed_effect_flag == 1){
     
@@ -1010,8 +997,8 @@ Prediction_function <- function(X_train_data, Data,
     
     hsq_data_NEW_Fixed_effects = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
                                                                hsq_txt = "GRM_OTUs_reml__", 
-                                                               num_otus = N, var_comp_num = 1, 
-                                                               data = Data, individuals = 1)
+                                                               num_otus = N, config = config, 
+                                                               individuals = 1)
     
     
   }
@@ -1177,8 +1164,6 @@ Prediction_function <- function(X_train_data, Data,
       
       Pred[t+1] = g_new[t+1] #Only random effects
     }
-    
-    
   }
   
   y = y_train_vec[(T_start+1):length(y_train_vec)]
@@ -1199,6 +1184,263 @@ Prediction_function <- function(X_train_data, Data,
   return(Result)
   
 }
+
+
+Prediction_function_partition <- function(X_train_data, Data, 
+                                          index, OTU, X_start, T_start, END = 5, All_individuals,
+                                          path_hsq_files, path_fixed_effect,
+                                          norm_flag = 0, Fixed_effect_flag, config,
+                                          fixed_effect_file = "prev_t_1_times__", plot_flag = 0){
+  
+  path_hsq_files = paste(path_hsq_files ,OTU, sep = "")
+  
+  if(Fixed_effect_flag == 1){
+    
+    setwd(path_fixed_effect)
+    
+    fixed_effect_file = read.table(paste(fixed_effect_file ,OTU,".txt", sep = ""))
+    fixed_effect_vec = x_train_rel[,OTU]
+    
+    
+    setwd(path_hsq_files)
+    files <- list.files(path=path_hsq_files, pattern="*.blp", full.names=T, recursive=FALSE)
+    
+    
+    N = length(files)
+    
+    hsq_data_NEW_Fixed_effects = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
+                                                               hsq_txt = "GRM_OTUs_reml__", 
+                                                               num_otus = N, config = config, 
+                                                               individuals = 1)
+    
+    
+  }
+  
+  y_train_vec = as.numeric(create_y_vec(data = Data, 
+                                        individuals = All_individuals, start = X_start+1, feature = OTU))
+  
+  setwd(path_hsq_files)
+  files <- list.files(path=path_hsq_files, pattern="*.blp", full.names=T, recursive=FALSE)
+  
+  hsq_txt = "GRM_OTUs_reml__"
+  
+  par_index = c()
+  
+  for(j in 1:length(files)){
+    split = strsplit(x = as.character(files[j]), split = "__")
+    split_2 = strsplit(x = as.character(split[[1]][2]), split = ".indi.blp")
+    par_index = c(par_index, as.numeric(split_2[[1]]))
+  }
+  
+  par_index = sort(par_index)
+  
+  par_index = par_index[c(which(par_index == T_start) : length(par_index))]
+  g_new_1 = c()
+  g_new_2 = c()
+  g_train_vec = c()
+  Pred = c()
+  Inter_Pred = c()
+  fixed_intercept = c()
+  fixed_coeff = c()
+  
+  
+  
+  for(t in T_start:(dim(X_train_data)[1] - 1)){
+    
+    if(t %% 100 == 0)
+      print(t)
+    
+    par_test_mat = as.matrix(read.table(paste(hsq_txt ,par_index[(t-T_start+1)],".indi.blp", sep = ""), 
+                                        sep = "\t", fill = T, header = F))
+    
+    # tail(par_test_mat)
+    
+    g_train_1 = par_test_mat[c(1:t),4]
+    g_train_2 = par_test_mat[c(1:t),6]
+    
+    
+    if(t >= T_start){
+      
+      if(norm_flag == 1){
+        
+        C_data_train = X_train_data[c(1:t),index]
+        
+        dat = C_data_train
+        scaled.dat <- scale(dat)
+        
+        scaled.dat[is.na(scaled.dat)] = 0
+        
+        
+        cosine <- function(m) {
+          m_normalized <- m / sqrt(rowSums(m ^ 2))
+          tcrossprod(m_normalized)
+        }
+        
+        
+        Kinship_test = cosine(scaled.dat[-c(1:END),])
+        # Kinship_test[1:10, 1:10]
+        
+        Inverse_A = solve(Kinship_test)
+        # Inverse_A[1:10, 1:10]
+        
+        
+        t_W = t(scaled.dat[-c(1:END),])
+        # dim(t_W)
+        
+        u_hat = (t_W %*% Inverse_A)  %*% (g_train[-c(1:END)])/dim(t_W)[1]
+      }
+      
+      if(norm_flag == 0){
+        
+        C_data_train_1 = X_train_data[c(1:t),index_1]
+        C_data_train_2 = X_train_data[c(1:t),index_2]
+        
+        
+        cosine <- function(m) {
+          m_normalized <- m / sqrt(rowSums(m ^ 2))
+          tcrossprod(m_normalized)
+        }
+        
+        
+        ###1
+        Kinship_test_1 = cosine(C_data_train_1)
+        # Kinship_test[1:10, 1:10]
+        
+        Inverse_A_1 = solve(Kinship_test_1)
+        # Inverse_A[1:10, 1:10]
+        
+        C_data_train_scaled_1 = normalize(C_data_train_1, norm = "l2")
+        t_W_1 = t(C_data_train_scaled_1)
+        # dim(t_W)
+        
+        u_hat_1 = (t_W_1 %*% Inverse_A_1)  %*% (g_train_1)/dim(t_W_1)[1]
+        
+        ###2
+        Kinship_test_2 = cosine(C_data_train_2)
+        # Kinship_test[1:10, 1:10]
+        
+        Inverse_A_2 = solve(Kinship_test_2)
+        # Inverse_A[1:10, 1:10]
+        
+        C_data_train_scaled_2 = normalize(C_data_train_2, norm = "l2")
+        t_W_2 = t(C_data_train_scaled_2)
+        # dim(t_W)
+        
+        u_hat_2 = (t_W_2 %*% Inverse_A_2)  %*% (g_train_2)/dim(t_W_2)[1]
+        
+      }
+      
+    }
+    
+    
+    if(Fixed_effect_flag == 1){
+      
+      
+      if(norm_flag == 1){
+        
+        C_data_test = X_train_data[c(1:(t+1)),index]
+        # dim(C_data_test)
+        dat_test = C_data_test
+        scaled.dat_test <- scale(dat_test)
+        scaled.dat_test[is.na(scaled.dat_test)] = 0
+        
+        g_new[t+1] = scaled.dat_test[(t+1),] %*% u_hat
+      }
+      
+      if(norm_flag == 0){
+        
+        ##1
+        C_data_test_1 = X_train_data[c(1:(t+1)),index_1]
+        # dim(C_data_test)
+        C_data_test_scaled_1 = normalize(C_data_test_1, norm = "l2")
+        g_new_1[t+1] = C_data_test_scaled_1[(t+1),] %*% u_hat_1
+        
+        ##2
+        C_data_test_2 = X_train_data[c(1:(t+1)),index_2]
+        # dim(C_data_test)
+        C_data_test_scaled_2 = normalize(C_data_test_2, norm = "l2")
+        g_new_2[t+1] = C_data_test_scaled_2[(t+1),] %*% u_hat_2
+      }
+      
+      
+      fixed_intercept[t+1] = hsq_data_NEW_Fixed_effects$intercept[t-T_start+1]
+      fixed_coeff[t+1] = hsq_data_NEW_Fixed_effects$fixed_effect[t-T_start+1]
+      
+      
+      
+      Pred[t+1] = fixed_intercept[t+1] + fixed_coeff[t+1]*fixed_effect_vec[t+1] +  g_new_1[t+1] + g_new_2[t+1]
+      # Pred[t+1] = fixed_intercept[T_start+1] + fixed_coeff[T_start+1]*fixed_effect_vec[t+1] +  g_new[t+1]
+      
+    }
+    
+    
+    if(Fixed_effect_flag == 0){
+      
+      
+      if(norm_flag == 1){
+        
+        ###1
+        C_data_test_1 = X_train_data[c(1:(t+1)),index_1]
+        # dim(C_data_test)
+        dat_test_1 = C_data_test_1
+        scaled.dat_test_1 <- scale(dat_test_1)
+        scaled.dat_test_1[is.na(scaled.dat_test_1)] = 0
+        
+        g_new_1[t+1] = scaled.dat_test_1[(t+1),] %*% u_hat_1
+        
+        
+        ###2
+        C_data_test_2 = X_train_data[c(1:(t+1)),index_2]
+        # dim(C_data_test)
+        dat_test_2 = C_data_test_2
+        scaled.dat_test_2 <- scale(dat_test_2)
+        scaled.dat_test_2[is.na(scaled.dat_test_2)] = 0
+        
+        g_new_2[t+1] = scaled.dat_test_2[(t+1),] %*% u_hat_2
+      }
+      
+      if(norm_flag == 0){
+        
+        
+        ###1
+        C_data_test_1 = X_train_data[c(1:(t+1)),index_1]
+        # dim(C_data_test)
+        C_data_test_scaled_1 = normalize(C_data_test_1, norm = "l2")
+        g_new_1[t+1] = C_data_test_scaled_1[(t+1),] %*% u_hat_1
+        
+        
+        ###2
+        C_data_test_2 = X_train_data[c(1:(t+1)),index_2]
+        # dim(C_data_test)
+        C_data_test_scaled_2 = normalize(C_data_test_2, norm = "l2")
+        g_new_2[t+1] = C_data_test_scaled_2[(t+1),] %*% u_hat_2
+      }
+      
+      Pred[t+1] = g_new_1[t+1] +  g_new_2[t+1] #Only random effects
+    }
+    
+    
+  }
+  
+  y = y_train_vec[(T_start+1):length(y_train_vec)]
+  y_hat = na.omit(Pred)
+  
+  if(plot_flag == 1){
+    
+    
+    plot(y, type = "l", ylim = c(min(y, na.omit(y_hat)), max(y, na.omit(y_hat))))
+    lines(y_hat, col = "red")
+    
+  }
+  
+  cor_test = cor.test(y, y_hat)
+  
+  Result = list(y = y , y_hat = y_hat,cor = cor_test$estimate^2, mse = sqrt(mean((y-y_hat)^2)) , mae = sqrt(mean(abs(y-y_hat))) , u_hats = u_hat )
+  
+  return(Result)
+  
+}
+
 #Calculate Prediction R^2
 Prediction_Rsq_calc <- function(ind, Prediction_results){
   
