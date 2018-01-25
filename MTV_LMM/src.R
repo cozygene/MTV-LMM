@@ -748,7 +748,7 @@ create_mgrm_file <- function(t_min, t_max, num_GRM, saving_path, prediction_flag
       tmp = c()
       for(i in 1:num_GRM){
         
-        GRM[k,i] = paste("GRM_3_bins__",i,"_",t_data[k], sep = "")
+        GRM[k,i] = paste("Data_files/GRM_files/GRM_3_bins__",i,"_",t_data[k], sep = "")
         tmp = rbind(tmp, GRM[k,i]) 
       }
       
