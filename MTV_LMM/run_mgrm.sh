@@ -1,5 +1,6 @@
 mkdir Data_files/Time_explainability_1_time_point
 mkdir Data_files/Time_explainability_1_time_point_FF
+mkdir Data_files/GRM_files
 
 cat Data_files/ind_NEW.txt | while read -r line
 
