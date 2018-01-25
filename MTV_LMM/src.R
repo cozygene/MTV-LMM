@@ -610,8 +610,15 @@ Block_permutation <- function(blocksizes, t_max){
       ind_permutation[[j]] = sample(c((index[j]+1):(index[j+1])))
     }
     
-    if(t_max < index[length(blocksizes)+1])
-      ind_permutation[[length(blocksizes)]] = sample(c((index[length(blocksizes)]):t_max))
+    tmp = unlist(ind_permutation)
+    
+    if(length(tmp) < (t_max+1)){
+      
+      if(length(c((index[length(blocksizes)]):(t_max))) == 1)
+        ind_permutation[[length(blocksizes)]] = (t_max+1)
+      else
+      ind_permutation[[length(blocksizes)]] = sample(x = c((index[length(blocksizes)]):(t_max)))
+    }
     
   }
   
