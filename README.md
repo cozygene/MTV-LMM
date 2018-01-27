@@ -1,4 +1,4 @@
-# MTV_LMM
+# MTV-LMM
 
 MTV-LMM is a linear mixed model method for the prediction of the microbial community temporal dynamics based on the community composition at previous time stamps. MTV-LMM thus allows identifying auto-regressive OTUs in time series microbiome datasets, which can be taken to further analysis of the microbiome trajectory over time.
 
