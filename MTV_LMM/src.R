@@ -984,15 +984,6 @@ Prediction_function <- function(X_train_data, Data, x_train_rel,
   
   
   
-  # X_train_data = Data_list$x_train; Data = Results_3_bins$rel_data_all; x_train_rel = Data_list$x_train_rel;
-  # index = ind; OTU = ind[k]; X_start = 1; T_start = round(sum(ind_data$t_points)*TH); END = 5; 
-  # All_individuals = c(1:ind_data$ind_num);
-  # path_hsq_files = paste(dir_path, "Data_files/Prediction/Prediction_1_time_point_FF_", sep = "");
-  # path_fixed_effect = paste(dir_path, "Data_files/Fixed_effect_per_OTU", sep = "");
-  # norm_flag = 0; Fixed_effect_flag = 1; config = "2_GRM_FF";
-  # fixed_effect_file = "prev_t_1_times__"; plot_flag = 0
-  
-  
   path_hsq_files = paste(path_hsq_files ,OTU, sep = "")
   
   if( any(config == c("2_GRM_FF" , "2_GRM" , "1_GRM_FF" , "1_GRM")) == FALSE ) {
@@ -1050,12 +1041,14 @@ Prediction_function <- function(X_train_data, Data, x_train_rel,
   fixed_coeff = c()
   
   
+  
   for(t in T_start:(dim(X_train_data)[1] - 1)){
-    
     
     if(t %% 50 == 0)
       print(t)
     
+    if(!is.na(par_index[(t-T_start+1)])){
+      
     par_test_mat = as.matrix(read.table(paste(hsq_txt ,par_index[(t-T_start+1)],".indi.blp", sep = ""), 
                                         sep = "\t", fill = T, header = F))[,1:6]
     
@@ -1183,10 +1176,16 @@ Prediction_function <- function(X_train_data, Data, x_train_rel,
       
       Pred[t+1] = g_new[t+1] #Only random effects
     }
+    
+    }else{
+      Pred[t+1] = Pred[t]
+      
+    }
+    
   }
   
   y = y_train_vec[(T_start+1):length(y_train_vec)]
-  y_hat = na.omit(Pred)
+  y_hat = Pred[(T_start+1):length(Pred)]
   
   if(plot_flag == 1){
     
@@ -1271,9 +1270,11 @@ Prediction_function_partition <- function(X_train_data, Data, x_train_rel,
   
   for(t in T_start:(dim(X_train_data)[1] - 1)){
     
-    if(t %% 100 == 0)
+    if(t %% 50 == 0)
       print(t)
     
+    if(!is.na(par_index[(t-T_start+1)])){
+      
     par_test_mat = as.matrix(read.table(paste(hsq_txt ,par_index[(t-T_start+1)],".indi.blp", sep = ""), 
                                         sep = "\t", fill = T, header = F))
     
@@ -1443,7 +1444,11 @@ Prediction_function_partition <- function(X_train_data, Data, x_train_rel,
       Pred[t+1] = g_new_1[t+1] +  g_new_2[t+1] #Only random effects
     }
     
-    
+    }else{
+        Pred[t+1] = Pred[t]
+        
+      }
+
   }
   
   y = y_train_vec[(T_start+1):length(y_train_vec)]
