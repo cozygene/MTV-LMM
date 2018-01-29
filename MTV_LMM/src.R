@@ -775,10 +775,10 @@ create_mgrm_file <- function(t_min, t_max, num_GRM, saving_path, prediction_flag
 #Parse hsq files from GCTA
 Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var_comp_num, 
                                           Refactor_flag, data=NULL, individuals = All_individuals, 
-                                          fixed_effect_flag = 1, 
+                                          Fixed_effect_flag = 1, 
                                           config = c("1_GRM_FF", "1_GRM", "2_GRM_FF", "2_GRM")){
   
-  if( any(config == c("2_GRM_FF" , "2_GRM" , "1_GRM_FF" , "1_GRM")) == FALSE ) {
+  if( any(config == c("3_GRM_FF", "3_GRM","2_GRM_FF" , "2_GRM" , "1_GRM_FF" , "1_GRM")) == FALSE ) {
     
     stop("Please provide one of the following config values - 2_GRM_FF, 2_GRM, 1_GRM_FF, 1_GRM" )
   }
@@ -814,6 +814,8 @@ Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var
   }
   
   hsq_time = c()
+  hsq_time_1 = c()
+  hsq_time_2 = c()
   p_val_hsq  = c()
   hsq_individual = c()
   intercept = c()
@@ -821,6 +823,8 @@ Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var
   logL0 = c()
   logL = c()
   se_hsq_time = c()
+  se_hsq_time_1 = c()
+  se_hsq_time_2 = c()
   hsq_ind = c()
   se_hsq_ind = c()
   
@@ -949,16 +953,21 @@ Create_hsq_data_Fixed_effects <- function(path_hsq_files, hsq_txt, num_otus, var
 #Calculate Time explainability for each OTU
 Calculate_TE_func <- function(path_hsq_files,
                              Data, All_individuals, num_time_points, 
-                             fixed_effect_flag = 0, var_comp_num, ind_1){
+                             Fixed_effect_flag = 0, var_comp_num, ind_1){
   
 
   files <- list.files(path=path_hsq_files, pattern="*.hsq", full.names=T, recursive=FALSE)
   N = length(files)
   
-  hsq_data_NEW =   Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
-                                                 hsq_txt = "GRM_OTUs_reml__", 
-                                                 num_otus = N, config = config, 
-                                                 individuals = 1)
+  # hsq_data_NEW =   Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
+  #                                                hsq_txt = "GRM_OTUs_reml__", 
+  #                                                num_otus = N, config = config, 
+  #                                                individuals = 1)
+  
+  hsq_data_NEW_Fixed_effects = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
+                                                             hsq_txt = "GRM_OTUs_reml__", 
+                                                             num_otus = N, config = config, Fixed_effect_flag  = Fixed_effect_flag,
+                                                             individuals = 1)
 
   
   
@@ -968,11 +977,21 @@ Calculate_TE_func <- function(path_hsq_files,
 }
 
 #Calculate iterative prediction
-Prediction_function <- function(X_train_data, Data, 
+Prediction_function <- function(X_train_data, Data, x_train_rel,
                                 index, OTU, X_start, T_start, END = 5, All_individuals,
                                 path_hsq_files, path_fixed_effect = NULL, norm_flag = 0, Fixed_effect_flag = 0,
                                 fixed_effect_file = "prev_t_1_times__", plot_flag = 0, config = "2_GRM_FF"){
-
+  
+  
+  
+  # X_train_data = Data_list$x_train; Data = Results_3_bins$rel_data_all; x_train_rel = Data_list$x_train_rel;
+  # index = ind; OTU = ind[k]; X_start = 1; T_start = round(sum(ind_data$t_points)*TH); END = 5; 
+  # All_individuals = c(1:ind_data$ind_num);
+  # path_hsq_files = paste(dir_path, "Data_files/Prediction/Prediction_1_time_point_FF_", sep = "");
+  # path_fixed_effect = paste(dir_path, "Data_files/Fixed_effect_per_OTU", sep = "");
+  # norm_flag = 0; Fixed_effect_flag = 1; config = "2_GRM_FF";
+  # fixed_effect_file = "prev_t_1_times__"; plot_flag = 0
+  
   
   path_hsq_files = paste(path_hsq_files ,OTU, sep = "")
   
@@ -997,7 +1016,7 @@ Prediction_function <- function(X_train_data, Data,
     
     hsq_data_NEW_Fixed_effects = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
                                                                hsq_txt = "GRM_OTUs_reml__", 
-                                                               num_otus = N, config = config, 
+                                                               num_otus = N, config = config, Fixed_effect_flag  = Fixed_effect_flag,
                                                                individuals = 1)
     
     
@@ -1034,7 +1053,7 @@ Prediction_function <- function(X_train_data, Data,
   for(t in T_start:(dim(X_train_data)[1] - 1)){
     
     
-    if(t %% 100 == 0)
+    if(t %% 50 == 0)
       print(t)
     
     par_test_mat = as.matrix(read.table(paste(hsq_txt ,par_index[(t-T_start+1)],".indi.blp", sep = ""), 
@@ -1042,7 +1061,7 @@ Prediction_function <- function(X_train_data, Data,
     
     tail(par_test_mat)
     
-    g_train = par_test_mat[,4]
+    g_train = par_test_mat[c(1:t),4]
     
     if(t >= T_start){
       
@@ -1186,7 +1205,7 @@ Prediction_function <- function(X_train_data, Data,
 }
 
 
-Prediction_function_partition <- function(X_train_data, Data, 
+Prediction_function_partition <- function(X_train_data, Data, x_train_rel,
                                           index, OTU, X_start, T_start, END = 5, All_individuals,
                                           path_hsq_files, path_fixed_effect,
                                           norm_flag = 0, Fixed_effect_flag, config,
@@ -1207,10 +1226,15 @@ Prediction_function_partition <- function(X_train_data, Data,
     
     
     N = length(files)
+
+    # hsq_data_NEW_Fixed_effects = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
+    #                                                            hsq_txt = "GRM_OTUs_reml__", 
+    #                                                            num_otus = N, config = config, 
+    #                                                            individuals = 1)
     
     hsq_data_NEW_Fixed_effects = Create_hsq_data_Fixed_effects(path_hsq_files = path_hsq_files,
                                                                hsq_txt = "GRM_OTUs_reml__", 
-                                                               num_otus = N, config = config, 
+                                                               num_otus = N, config = config, Fixed_effect_flag  = Fixed_effect_flag,
                                                                individuals = 1)
     
     
