@@ -125,7 +125,7 @@ setwd(paste(dir_path, "Data_files", sep = ""))
       
       Prediction_Results <- c()
       
-      Prediction_Results <- try(Prediction_function(X_train_data = Data_list$x_train, Data = Results_3_bins$rel_data_all, 
+      Prediction_Results <- try(Prediction_function(X_train_data = Data_list$x_train, x_train_rel = Data_list$x_train_rel, Data = Results_3_bins$rel_data_all, 
                                                       index = ind, OTU = ind[k], X_start = 1, T_start = round(sum(ind_data$t_points)*TH), END = 5, 
                                                       All_individuals = c(1:ind_data$ind_num),
                                                       path_hsq_files = paste(dir_path, "Data_files/Prediction/Prediction_1_time_point_", sep = ""),
