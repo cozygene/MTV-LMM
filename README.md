@@ -5,8 +5,8 @@ MTV-LMM is a linear mixed model method for the prediction of the microbial commu
 Software Requirements:
 -----------------------
 
-- R version 3.4.0
-- GCTA_1.26 and above
+- R version 3.4.0 and above 
+- [GCTA_1.26 and above](https://cnsgenomics.com/software/gcta/#Download)
 
 
 Content
