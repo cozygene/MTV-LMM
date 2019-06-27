@@ -49,8 +49,8 @@ Usage instructions
 1. Clone this repository ('MTV-LMM') and save it on your computer.
 2. Save your input data (metadata and count table) in the directory 'Data_files'.
 3. Open your terminal and navigave to the cloned repository. 
-4. Run chmod +x run_TE.sh (execute permission).
-5. Run the file 'run_TE.sh' from the main directory after inserting the following arguments as input:
+4. Run chmod +x run_TE.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions). 
+6. Run the file 'run_TE.sh' from the main directory after inserting the following arguments as input:
 
 
 | ARGUMENT | LOCATION |DESCRIPTION |
@@ -74,7 +74,7 @@ To run MTV-LMM on example data (using multiple sinks) do:
 2. Set 'dir_path' in files : E_step_1.R, TE_step_3.R to the path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/") .
 3. Set 'gcta path' in the init.txt file to the path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64")
 4. Open your terminal and navigave to the cloned repository. 
-5. Run chmod +x run_TE_example.sh (execute permission).
+5. Run chmod +x run_TE_example.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions).
 6. Run the file 'run_TE_example.sh' from the main directory.
 
 
