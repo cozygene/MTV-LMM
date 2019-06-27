@@ -1,6 +1,6 @@
 # MTV-LMM
 
-MTV-LMM (Microbial Temporal Variability Linear Mixed Model) is a flexible and computationally efficient tool to identify autoregressive taxa (i.e., taxa whose abundance can be predicted based on microbial composition at previous time-points), quantify their temporal effects (i.e., 'Time_explainability') and predict their trajectory in future time points. For more details see [Modeling the temporal dynamics of the gut microbial community in adults and infants, Shenhav et al. 2019](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006960)
+MTV-LMM (Microbial Temporal Variability Linear Mixed Model) is a scalable and computationally efficient tool to identify autoregressive taxa (i.e., taxa whose abundance can be predicted based on microbial composition at previous time-points), quantify their temporal effects (i.e., 'Time_explainability') and predict their trajectory in future time points. For more details see [Modeling the temporal dynamics of the gut microbial community in adults and infants, Shenhav et al. 2019](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006960)
 
 
 Support
