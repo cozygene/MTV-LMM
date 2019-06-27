@@ -23,7 +23,7 @@ Input format
 -----------------------
 The input to MTV-LMM is composed of two .csv files :
 
-count table  - A matrix of temporal samples by taxa, across multiple hosts. The first row contains the sample ids ('SampleID'). The first column includes taxa ids. Then every consecutive column contains read counts for each sample. Note that this order must be respected (see example below).
+count table  - A matrix of temporal samples by taxa, across multiple hosts. The first row contains the sample ids. The first column includes taxa ids. Then every consecutive column contains read counts for each sample. Note that this order must be respected (see example below).
 
 metadata -  The first row contains the headers ('sample_id', 'ind_id', 'Id_num', 'ind_time', 'Sampling_day'). The first column contains the sample ids. The second column contains the subject ids; the third column is the index of each subject (between 1 -  number of subjects in the data). The fourth column is the time index where the scale is the experiment's sampling rate (e.g., days, weeks, months). The fifth column is the sampling day (similar to the fourth column, but on the scale of days). Note that these names must be respected  (see examples below).
 
