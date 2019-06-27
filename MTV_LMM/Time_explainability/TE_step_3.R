@@ -82,19 +82,17 @@ scaled.dat[is.na(scaled.dat)] = 0
                                    num_time_points = sum(ind_data$t_points),Fixed_effect_flag = fixed_effect_flag ,ind_1 = NULL,
                                    config = config_flag)
 
-    colnames(TE_Results) = c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", "p_value", "intercept", "Fixed_effect",
+    colnames(TE_Results) = c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", "p_value", 
+                             "intercept", "Fixed_effect",
                              "logL0", "logL", "num_otus", "OTU_index")
 
     TE_Results = TE_Results[order(TE_Results$OTU_index),]
     p_adjust = p.adjust(p = TE_Results$p_value, method = "BH", n = length(TE_Results$p_value))
 
 
-    TE_Results$p_value_adjusted = rep(NA, length(TE_Results$p_value))
+    TE_Results$p_value_adjusted = p_adjust
 
-    for(k in 1:length(ind)){
-      TE_Results$p_value_adjusted[TE_Results$OTU_index == ind[k]] = p_adjust[k]
 
-    }
     print(TE_Results)
 
   }else{
