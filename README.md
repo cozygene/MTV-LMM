@@ -50,12 +50,13 @@ Usage instructions
 2. Save your input data (metadata and count table) in the directory 'Data_files'.
 3. Open your terminal and navigave to the cloned repository. 
 4. Run chmod +x run_TE.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions). 
-6. Run the file 'run_TE.sh' from the main directory after inserting the following arguments as input:
+5. Run the file 'run_TE.sh' from the main directory after inserting the following arguments as input:
 
 
 | ARGUMENT | LOCATION |DESCRIPTION |
 | ------------- | ------------- |------------- |
 | dir_path  |  TE_step_1.R, TE_step_3.R |The path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/") |
+| init  |  TE_step_1.R, TE_step_3.R | If you wish to run the example dataset, set init = read.table('init_example.txt'), otherwise, set init = read.table('init.txt') |
 | gcta path  |  init.txt |The path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64") |
 | otu_table file name  |  init.txt |The full name of your taxa count matrix, including file type (e.g., 'otu_table_example.csv')  |
 | count_matrix   |  init.txt |The full name of your metadata file, including file type (e.g., 'metadata_example.csv')  |
@@ -72,11 +73,11 @@ To run MTV-LMM on example data (using multiple sinks) do:
 
 1. Clone this repository ('MTV-LMM') and save it on your computer.
 2. Set 'dir_path' in files : E_step_1.R, TE_step_3.R to the path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/").
-3. Set 'init = read.table('init_example.txt') in files : E_step_1.R, TE_step_3.R. 
-3. Set 'gcta path' in the init_example.txt file to the path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64")
-4. Open your terminal and navigave to the cloned repository. 
-5. Run chmod +x run_TE_example.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions).
-6. Run the file 'run_TE_example.sh' from the main directory.
+3. Set init = read.table('init_example.txt') in files : E_step_1.R, TE_step_3.R. 
+4. Set 'gcta path' in the init_example.txt file to the path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64")
+5. Open your terminal and navigave to the cloned repository. 
+6. Run chmod +x run_TE_example.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions).
+7. Run the file 'run_TE_example.sh' from the main directory.
 
 
 Input - 
