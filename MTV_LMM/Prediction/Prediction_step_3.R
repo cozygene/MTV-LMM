@@ -7,7 +7,6 @@ if (dir_path == '') {
   message("Please tell me where to find the code by setting an environment variable 'dir_path' ", dir_path)
 }
 
-dir_path = "~/Dropbox/MTV-LMM/MTV_LMM/"
 
 setwd(dir_path)
 source("src.R")
