@@ -34,7 +34,7 @@ Output format
 The output is a matrix of autoregressive taxa and their temporal effects.  
 Time_explainability = the estimate of variance explained by the microbial community composition at previous time points, 
 SD_Time_explainability = the standard deviation of the time_explainability, 
-Ind_effect = the variance explained by the individual at previous time points, 
+Ind_effect = the estimate of variance explained by the individual at previous time points, 
 SD_ind_effect  = the standard deviation of the Ind_effect, 
 Fixed_effect = the effect of  the previous time points of the focal OTU (returns NA if fixed_effect_flag = 0), 
 logL0 =  log-likelihood under the null (no termpral effect), 
