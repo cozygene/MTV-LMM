@@ -26,6 +26,19 @@ fixed_effect_flag = as.numeric(as.character(init$V1[4]))
   OTU_table = read.csv(count_matrix, header = T, fill = T, row.names = 1)
   meta_data = read.csv(metadata_file, header = TRUE)
   names(meta_data) = c("sample_id",  "ind_id" , "Id_num", "ind_time", "Sampling_day") # This is the meta-data format
+
+  # Extract only those samples in common between the two tables
+  common.sample.ids <- intersect(meta_data$sample_id, colnames(OTU_table))
+  OTU_table <- OTU_table[,common.sample.ids]
+  meta_data$sample_id <- meta_data$sample_id
+  # Double-check that the mapping file and otu table
+  # had overlapping samples
+  if(length(common.sample.ids) <= 1) {
+    message <- paste(sprintf('Error: there are %d sample ids in common '),
+                     'between the metadata file and data table')
+    stop(message)
+  }
+
   
   #extract the number of time points per individual from the meta data
   ind_data = ind_num_func(meta_data = meta_data, X_start = 1)
