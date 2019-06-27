@@ -71,8 +71,9 @@ To run MTV-LMM on example data (using multiple sinks) do:
 
 
 1. Clone this repository ('MTV-LMM') and save it on your computer.
-2. Set 'dir_path' in files : E_step_1.R, TE_step_3.R to the path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/") .
-3. Set 'gcta path' in the init.txt file to the path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64")
+2. Set 'dir_path' in files : E_step_1.R, TE_step_3.R to the path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/").
+3. Set 'init = read.table('init_example.txt') in files : E_step_1.R, TE_step_3.R. 
+3. Set 'gcta path' in the init_example.txt file to the path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64")
 4. Open your terminal and navigave to the cloned repository. 
 5. Run chmod +x run_TE_example.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions).
 6. Run the file 'run_TE_example.sh' from the main directory.
