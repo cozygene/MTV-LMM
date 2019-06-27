@@ -16,7 +16,7 @@ MTV-LMM is written R. In addition to R 3.4.0 (and higher), it has the following 
 
 - "dplyr", "vegan" (R packages)
 
-- [GCTA_1.26 and above](https://cnsgenomics.com/software/gcta/#Download)
+- [GCTA_1.26 and higher. We recommend using the latest version](https://cnsgenomics.com/software/gcta/#Download)
 
 
 Input format
