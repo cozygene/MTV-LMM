@@ -81,16 +81,21 @@ scaled.dat[is.na(scaled.dat)] = 0
                                    Data = Results_3_bins$binned_data_all, All_individuals = c(1:ind_data$ind_num),
                                    num_time_points = sum(ind_data$t_points),Fixed_effect_flag = fixed_effect_flag ,ind_1 = NULL,
                                    config = config_flag)
-
+    
     colnames(TE_Results) = c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", "p_value", 
                              "intercept", "Fixed_effect",
                              "logL0", "logL", "num_otus", "OTU_index")
+    
 
     TE_Results = TE_Results[order(TE_Results$OTU_index),]
     p_adjust = p.adjust(p = TE_Results$p_value, method = "BH", n = length(TE_Results$p_value))
 
 
     TE_Results$p_value_adjusted = p_adjust
+    
+    TE_Results = TE_Results[,c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", 
+                               "intercept", "Fixed_effect",
+                               "logL0", "logL","OTU_index")]
 
 
     print(TE_Results)
