@@ -21,7 +21,7 @@ setwd(paste(dir_path, "Data_files", sep = ""))
 count_matrix = as.character(init$V1[2])
 metadata_file = as.character(init$V1[3])
 fixed_effect_flag = 0
-TH = as.numeric(as.character(init$V1[5]))
+TH = as.numeric(as.character(init$V1[4]))
 
 
 ###STEP 1 
