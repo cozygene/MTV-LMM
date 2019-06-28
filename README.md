@@ -80,7 +80,7 @@ To run MTV-LMM on example data (using multiple sinks) do:
 
 Input - 
 
-metadata
+metadata (first 4 rows):
 
 | sample_id | ind_id |Id_num | ind_time | Sampling_day|
 | ------------- | ------------- |------------- |-------------|-------------|
@@ -102,7 +102,7 @@ count matrix (first 4 rows and columns):
 
 
 
-Output - 
+Output (first 2 rows) - 
 
 
 | Time_explainability | SD_Time_explainability |Ind_effect | SD_ind_effect | logL0| logL| OTU_index| p_value_adjusted| 
