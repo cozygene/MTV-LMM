@@ -36,7 +36,6 @@ Time_explainability = the estimate of variance explained by the microbial commun
 SD_Time_explainability = the standard deviation of the time_explainability, 
 Ind_effect = the estimate of variance explained by the individual at previous time points, 
 SD_ind_effect  = the standard deviation of the Ind_effect, 
-Fixed_effect = the effect of  the previous time points of the focal OTU (returns NA if fixed_effect_flag = 0), 
 logL0 =  log-likelihood under the null (no termpral effect), 
 logL = log-likelihood under the alternative, 
 OTU_index = the index of the focal taxa in the count matrix, 
@@ -60,7 +59,6 @@ Usage instructions
 | gcta path  |  init.txt |The path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64") |
 | otu_table file name  |  init.txt |The full name of your taxa count matrix, including file type (e.g., 'otu_table_example.csv')  |
 | count_matrix   |  init.txt |The full name of your metadata file, including file type (e.g., 'metadata_example.csv')  |
-| fixed_effect_flag  | init.txt  | If you wish to use the previous time points of the focal OTU as a fixed effect, re, otherwise = 0 |
 | train-set proportion  |  init.txt |The proportion of the data used for model training |
 
 
@@ -107,8 +105,8 @@ count matrix (first 4 rows and columns):
 Output - 
 
 
-| Time_explainability | SD_Time_explainability |Ind_effect | SD_ind_effect | intercept | Fixed_effect| logL0| logL| OTU_index| p_value_adjusted| 
-| ------------- | ------------- |------------- |-------------|-------------|-------------|-------------|-------------|-------------|-------------|
-| 0.469181  |  0.046004 | 0.031580 | 0.022000|  0.000022 | 0.870526| 8136.467| 8145.550| 5890 | 3.542700e-05|
-| 0.419181  |  0.033438 | 0.010985 | 0.011545| 0.003023 | 0.531058| 4590.989| 4610.062| 7005 | 5.055050e-09|
+| Time_explainability | SD_Time_explainability |Ind_effect | SD_ind_effect | logL0| logL| OTU_index| p_value_adjusted| 
+| ------------- | ------------- |------------- |-------------|-------------|-------------|-------------|-------------|
+| 0.469181  |  0.046004 | 0.031580 | 0.022000| 8136.467| 8145.550| 1 | 3.542700e-05|
+| 0.419181  |  0.033438 | 0.010985 | 0.011545| 4590.989| 4610.062| 2 | 5.055050e-09|
 
