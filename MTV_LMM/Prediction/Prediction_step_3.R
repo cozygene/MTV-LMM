@@ -111,6 +111,10 @@ ind = qc_OTUs(Data = Data_list$x_train, threshold = 0.5, create_file_flag = T,
 config_flag = "2_GRM"
 pred_path = "Prediction_"
 
+setwd(dir_path)
+dir.create("Results")
+save_path = paste(dir_path, "Results", sep = "")
+
 
 if(dir.exists(file.path(paste(dir_path, "Data_files/Prediction/", sep = "")))){
   
