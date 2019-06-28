@@ -29,8 +29,6 @@ OTU_table = read.csv(count_matrix, header = T, fill = T, row.names = 1)
 meta_data = read.csv(metadata_file, header = TRUE)
 names(meta_data) = c("sample_id",  "ind_id" , "Id_num", "ind_time", "Sampling_day") # This is the meta-data format
 
-meta_data = meta_data[meta_data$Id_num < 21,]
-
 #Order the metadata file by time (per subject) 
 ids = as.character(unique(meta_data$ind_id))
 meta_data_ordered = c()
