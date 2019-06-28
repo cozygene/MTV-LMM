@@ -26,6 +26,20 @@ OTU_table = read.csv(count_matrix, header = T, fill = T, row.names = 1)
 meta_data = read.csv(metadata_file, header = TRUE)
 names(meta_data) = c("sample_id",  "ind_id" , "Id_num", "ind_time", "Sampling_day") # This is the meta-data format
 
+#Order the metadata file by time (per subject) 
+ids = as.character(unique(meta_data$ind_id))
+meta_data_ordered = c()
+
+for(i in 1:length(ids)){
+  
+  tmp = meta_data[which(meta_data$ind_id == ids[i]),]
+  tmp = tmp[order(tmp$ind_time),]
+  meta_data_ordered = rbind(meta_data_ordered, tmp)
+  
+}
+
+meta_data = meta_data_ordered
+
 # Extract only those samples in common between the two tables
 common.sample.ids <- intersect(meta_data$sample_id, colnames(OTU_table))
 OTU_table <- OTU_table[,common.sample.ids]
