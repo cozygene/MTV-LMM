@@ -17,9 +17,7 @@ setwd(paste(dir_path, "Data_files", sep = ""))
 #Set the arguments of your data
 count_matrix = as.character(init$V1[2])
 metadata_file = as.character(init$V1[3])
-# fixed_effect_flag can take the values 1 or 0
-# if fixed_effect_flag = 1 -> previous time points of the focal OTU will be used as fixed effects
-fixed_effect_flag = as.numeric(as.character(init$V1[4]))
+fixed_effect_flag = 0
 
 
 ###STEP 1 
