@@ -118,9 +118,7 @@ save_path = paste(dir_path, "Results", sep = "")
 
 if(dir.exists(file.path(paste(dir_path, "Data_files/Prediction/", sep = "")))){
   
-  setwd(paste(dir_path, "Data_files/Prediction", sep = ""))
-  save_path = paste(dir_path, "Data_files/Prediction", sep = "")
-  
+  setwd(paste(dir_path, "Data_files/Prediction", sep = ""))  
   
   Prediction_Results_1 = list()
   
