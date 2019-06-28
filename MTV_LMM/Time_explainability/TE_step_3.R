@@ -2,11 +2,8 @@
 # gc()
 
 
-dir_path = paste('')
-if (dir_path == '') {
-  message("Please tell me where to find the code by setting an environment variable 'dir_path' ", dir_path)
-}
 
+dir_path = "~/MTV-LMM/MTV_LMM/"
 setwd(dir_path)
 source("src.R")
 init = read.table("init.txt")
