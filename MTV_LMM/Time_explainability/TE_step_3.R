@@ -92,7 +92,7 @@ scaled.dat[is.na(scaled.dat)] = 0
     TE_Results$p_value_adjusted = p_adjust
     
     TE_Results = TE_Results[,c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", 
-                               "logL0", "logL","taxa_index", "p_value_adjusted)]
+                               "logL0", "logL","taxa_index", "p_value_adjusted")]
 
 
     print(TE_Results)
