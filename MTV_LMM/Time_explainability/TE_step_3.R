@@ -94,7 +94,6 @@ scaled.dat[is.na(scaled.dat)] = 0
     TE_Results$p_value_adjusted = p_adjust
     
     TE_Results = TE_Results[,c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", 
-                               "intercept", "Fixed_effect",
                                "logL0", "logL","OTU_index", "p_value_adjusted)]
 
 
