@@ -84,7 +84,7 @@ scaled.dat[is.na(scaled.dat)] = 0
     
     colnames(TE_Results) = c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", "p_value", 
                              "intercept", "Fixed_effect",
-                             "logL0", "logL", "num_otus", "OTU_index")
+                             "logL0", "logL", "num_taxa", "taxa_index")
     
 
     TE_Results = TE_Results[order(TE_Results$OTU_index),]
@@ -94,7 +94,7 @@ scaled.dat[is.na(scaled.dat)] = 0
     TE_Results$p_value_adjusted = p_adjust
     
     TE_Results = TE_Results[,c("Time_explainability", "SD_Time_explainability", "Ind_effect","SD_ind_effect", 
-                               "logL0", "logL","OTU_index", "p_value_adjusted)]
+                               "logL0", "logL","taxa_index", "p_value_adjusted)]
 
 
     print(TE_Results)
