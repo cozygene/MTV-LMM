@@ -103,7 +103,7 @@ count matrix (first 4 rows and columns):
 Output (first 2 rows) - 
 
 
-| Time_explainability | SD_Time_explainability |Ind_effect | SD_ind_effect | logL0| logL| OTU_index| p_value_adjusted| 
+| Time_explainability | SD_Time_explainability |Ind_effect | SD_ind_effect | logL0| logL| taxa_index| p_value_adjusted| 
 | ------------- | ------------- |------------- |-------------|-------------|-------------|-------------|-------------|
 | 0.469181  |  0.046004 | 0.031580 | 0.022000| 8136.467| 8145.550| 1 | 3.542700e-05|
 | 0.419181  |  0.033438 | 0.010985 | 0.011545| 4590.989| 4610.062| 2 | 5.055050e-09|
