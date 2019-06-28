@@ -65,7 +65,7 @@ Usage instructions
 Example
 ---------------------------
 
-To run MTV-LMM on example data (using multiple sinks) do:
+To run MTV-LMM on example data, do:
 
 
 1. Clone this repository ('MTV-LMM') and save it on your computer.
