@@ -6,11 +6,8 @@ args = commandArgs(trailingOnly=TRUE)
 dir_path = "~/MTV-LMM/MTV_LMM/"
 setwd(dir_path)
 source("src.R")
-init = read.table("init.txt")
 
 setwd(paste(dir_path, "Data_files", sep = ""))
-
-args = commandArgs(trailingOnly=TRUE)
 
 
 #Set the arguments of your data
