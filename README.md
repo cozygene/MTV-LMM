@@ -37,8 +37,7 @@ metadata -  The first row contains the headers ('sample_id', 'ind_id', 'Id_num',
 Output format
 -----------------------
 
-The output is a matrix of taxa (after qc i.e., taxa prevalent in at least 10% of the samples) and their temporal effects. Taxa is conserded 'autorehgressive' if the Time_explainability component is significant (p_value_adjusted <= 0.05)   
-
+The output is a matrix of taxa and their temporal effects. Taxa is conserded 'autorehgressive' if the Time_explainability component is significant (p_value_adjusted <= 0.05). Only qc taxa are presented (i.e., taxa that are present in at least 10% of the temporal samples).   
 
 | VALUE  |DESCRIPTION |
 | ------------- | ------------- |
@@ -102,7 +101,7 @@ To run MTV-LMM on example data:
 
 Input - 
 
-metadata (first 4 rows):
+metadata (first few rows):
 
 | sample_id | ind_id |Id_num | ind_time | Sampling_day|
 | ------------- | ------------- |------------- |-------------|-------------|
@@ -110,7 +109,10 @@ metadata (first 4 rows):
 | E000823.2.6  |  E000823 | 1 | 2.6| 78 |
 | E000823.4.0   |  E000823 | 1| 4 | 120 |
 | E000823.5.0  |  E000823 | 1 | 5 | 150 |
-
+| ...  |  ... | ... | ... | ... |
+| E001958.2.0  |  E001958 | 2	 | 2 | 60 |
+| E001958.2.9  |  E001958 | 2	 | 2.9 | 87 |
+| E001958.4.2  |  E001958 | 2	 | 4.2 | 126 |
 
 
 count table (first 4 rows and columns):
