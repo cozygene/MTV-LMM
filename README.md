@@ -68,7 +68,6 @@ chmod +x run_Prediction.sh
 
 ```
 ./run_TE.sh [your_gcta_path] [count_matrix] [metadata_file] 
-
 ```
 where
 
@@ -91,7 +90,6 @@ To run MTV-LMM on example data:
 
 ```
 ./run_TE.sh [your_gcta_path] otu_table_example.csv metadata_example.csv
-
 ```
 
 
