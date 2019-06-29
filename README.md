@@ -17,7 +17,7 @@ MTV-LMM is written R. In addition to R 3.4.0 (and higher), it has the following 
 - "dplyr", "vegan" (R packages)
 
 -  [GCTA_1.26 and higher. We recommend using the latest beta version](https://cnsgenomics.com/software/gcta/#Download). 
-    After downloading GCTA move it into your home directory using
+After downloading GCTA move it into your home directory using
 
 ```
 mv ~/Downloads/gcta_[version] ~/. 
@@ -67,17 +67,16 @@ chmod +x run_Prediction.sh
 4.  Execute
 
 ```
-./run_TE.sh [your_gcta_path] [count_matrix] [metadata_file] [train-proportion]
+./run_TE.sh [your_gcta_path] [count_matrix] [metadata_file] 
 
 ```
 where
 
 | ARGUMENT  |DESCRIPTION |
 | ------------- | ------------- |
-| your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). Note, in windows and iOS 'gcta64' file is in bin directory (nested in GCTA). In Linux 'gcta64' is in the main GCTA directory|
+| your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). In windows and ios 'gcta64' file is bin directory (in the GCTA folder). In Linux 'gcta64' is in the main directory|
 | count_matrix   |The full name of your taxa count matrix, including file type (e.g., otu_table_example.csv)  |
 | metadata_file   |The full name of your metadata file, including file type (e.g., metadata_example.csv)  |
-| train-proportion  |The proportion of the data used for model training |
 
 
 
@@ -91,7 +90,7 @@ To run MTV-LMM on example data:
 2.  Execute
 
 ```
-./run_TE.sh [your_gcta_path] otu_table_example.csv metadata_example.csv 0.67
+./run_TE.sh [your_gcta_path] otu_table_example.csv metadata_example.csv
 
 ```
 
