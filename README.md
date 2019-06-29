@@ -74,7 +74,7 @@ where
 
 | ARGUMENT  |DESCRIPTION |
 | ------------- | ------------- |
-| your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). In windows and ios 'gcta64' file is bin directory (in the GCTA folder). In Linux 'gcta64' is in the main directory|
+| your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). Note, in windows and iOS 'gcta64' file is in bin directory (nested in GCTA). In Linux 'gcta64' is in the main GCTA directory|
 | count_matrix   |The full name of your taxa count matrix, including file type (e.g., otu_table_example.csv)  |
 | metadata_file   |The full name of your metadata file, including file type (e.g., metadata_example.csv)  |
 | train-proportion  |The proportion of the data used for model training |
