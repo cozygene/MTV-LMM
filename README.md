@@ -37,15 +37,22 @@ metadata -  The first row contains the headers ('sample_id', 'ind_id', 'Id_num',
 Output format
 -----------------------
 
-The output is a matrix of autoregressive taxa and their temporal effects.  
-Time_explainability = the estimate of variance explained by the microbial community composition at previous time points, 
-SD_Time_explainability = the standard deviation of the time_explainability, 
-Ind_effect = the estimate of variance explained by the individual at previous time points, 
-SD_ind_effect  = the standard deviation of the Ind_effect, 
-logL0 =  log-likelihood under the null (no termpral effect), 
-logL = log-likelihood under the alternative, 
-OTU_index = the index of the focal taxa in the count matrix, 
-p_value_adjusted = the FDR adjusted p-value of the log-ratio test.
+The output is a matrix of taxa (after qc i.e., taxa prevalent in at least 10% of the samples) and their temporal effects. Taxa is conserded 'autorehgressive' if the Time_explainability component is significant (p_value_adjusted <= 0.05)   
+
+
+| VALUE  |DESCRIPTION |
+| ------------- | ------------- |
+| Time_explainability    | estimate of variance explained by the microbial community composition at previous time points|
+| SD_Time_explainability   | standard deviation of the time_explainability  |
+| Ind_effect   | estimate of variance explained by the host at previous time points |
+| SD_ind_effect   | standard deviation of the host effect |
+| logL0   | log-likelihood under the null hypothesis: no termpral effect |
+| logL   | log-likelihood under the alternative |
+| taxa_index   | index of the focal taxa in the count table|
+| p_value_adjusted   | FDR adjusted p-value of the log-ratio test (null hypothesis: no termpral effect)|
+
+
+
 
 
 Usage instructions
@@ -67,14 +74,14 @@ chmod +x run_Prediction.sh
 4.  Execute
 
 ```
-./run_TE.sh [your_gcta_path] [count_matrix] [metadata_file] 
+./run_TE.sh [your_gcta_path] [count_table] [metadata_file] 
 ```
 where
 
 | ARGUMENT  |DESCRIPTION |
 | ------------- | ------------- |
 | your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). In windows and ios 'gcta64' file is bin directory (in the GCTA folder). In Linux 'gcta64' is in the main directory|
-| count_matrix   |The full name of your taxa count matrix, including file type (e.g., otu_table_example.csv)  |
+| count_table   |The full name of your taxa count table, including file type (e.g., otu_table_example.csv)  |
 | metadata_file   |The full name of your metadata file, including file type (e.g., metadata_example.csv)  |
 
 
@@ -106,7 +113,7 @@ metadata (first 4 rows):
 
 
 
-count matrix (first 4 rows and columns):
+count table (first 4 rows and columns):
 
 | | E000823.1.8 |E000823.2.6 | E000823.4.0| E000823.5.0|
 | ------------- | ------------- |------------- |------------- |------------- |
@@ -122,6 +129,6 @@ Output (first 2 rows) -
 
 | Time_explainability | SD_Time_explainability |Ind_effect | SD_ind_effect | logL0| logL| taxa_index| p_value_adjusted| 
 | ------------- | ------------- |------------- |-------------|-------------|-------------|-------------|-------------|
-| 0.469181  |  0.046004 | 0.031580 | 0.022000| 8136.467| 8145.550| 1 | 3.542700e-05|
-| 0.419181  |  0.033438 | 0.010985 | 0.011545| 4590.989| 4610.062| 2 | 5.055050e-09|
+| 0.477828  |  0.07661 | 1.00E-06 | 0.014884| 3740.364| 3776.3| 6 | 0|
+| 0.130703  |  0.066163 | 0.045816 | 0.047176| 5234.124| 5238.217| 10 | 0.002760124|
 
