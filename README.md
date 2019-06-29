@@ -37,15 +37,22 @@ metadata -  The first row contains the headers ('sample_id', 'ind_id', 'Id_num',
 Output format
 -----------------------
 
-The output is a matrix of autoregressive taxa and their temporal effects.  
-Time_explainability = the estimate of variance explained by the microbial community composition at previous time points, 
-SD_Time_explainability = the standard deviation of the time_explainability, 
-Ind_effect = the estimate of variance explained by the individual at previous time points, 
-SD_ind_effect  = the standard deviation of the Ind_effect, 
-logL0 =  log-likelihood under the null (no termpral effect), 
-logL = log-likelihood under the alternative, 
-OTU_index = the index of the focal taxa in the count table, 
-p_value_adjusted = the FDR adjusted p-value of the log-ratio test.
+The output is a matrix of taxa (after qc i.e., taxa prevalent in at least 10% of the samples) and their temporal effects. Taxa is conserded 'autorehgressive' if the Time_explainability component is significant (p_value_adjusted <= 0.05)   
+
+
+| VALUE  |DESCRIPTION |
+| ------------- | ------------- |
+| Time_explainability    | estimate of variance explained by the microbial community composition at previous time points|
+| SD_Time_explainability   | standard deviation of the time_explainability  |
+| Ind_effect   | estimate of variance explained by the host at previous time points |
+| SD_ind_effect   | standard deviation of the host effect |
+| logL0   | log-likelihood under the null hypothesis: no termpral effect |
+| logL   | log-likelihood under the alternative |
+| taxa_index   | index of the focal taxa in the count table|
+| p_value_adjusted   | FDR adjusted p-value of the log-ratio test (null hypothesis: no termpral effect)|
+
+
+
 
 
 Usage instructions
