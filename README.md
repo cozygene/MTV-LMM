@@ -16,7 +16,13 @@ MTV-LMM is written R. In addition to R 3.4.0 (and higher), it has the following 
 
 - "dplyr", "vegan" (R packages)
 
-- [GCTA_1.26 and higher. We recommend using the latest beta version](https://cnsgenomics.com/software/gcta/#Download)
+-  [GCTA_1.26 and higher. We recommend using the latest beta version](https://cnsgenomics.com/software/gcta/#Download). 
+After downloading GCTA move it into your home directory using
+
+```
+mv ~/Downloads/gcta_[version] ~/. 
+```
+
 
 
 Input format
@@ -45,35 +51,48 @@ p_value_adjusted = the FDR adjusted p-value of the log-ratio test.
 Usage instructions
 ---------------------------
 
-1. Clone this repository ('MTV-LMM') and save it on your computer.
-2. Save your input data (metadata and count table) in the directory 'Data_files'.
-3. Open your terminal and navigave to the cloned repository. 
-4. Run chmod +x run_TE.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions). 
-5. Run the file 'run_TE.sh' from the main directory after inserting the following arguments as input:
+1. Clone this repository ('MTV-LMM') using the terminal.
+```
+git clone https://github.com/cozygene/MTV-LMM.git
+```
+2. Move the cloned directory into your home directory and change permissions by executing the following commands
+```
+mv MTV-LMM ~/. 
+cd ~/MTV-LMM/MTV_LMM
+chmod +x run_TE.sh
+chmod +x run_Prediction.sh
+```
+3. Save your input data (metadata and count table) in directory 'Data_files'.
 
+4.  Execute
 
-| ARGUMENT | LOCATION |DESCRIPTION |
-| ------------- | ------------- |------------- |
-| dir_path  |  TE_step_1.R, TE_step_3.R |The path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/") |
-| gcta path  |  init.txt |The path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64") |
-| otu_table file name  |  init.txt |The full name of your taxa count matrix, including file type (e.g., 'otu_table_example.csv')  |
-| count_matrix   |  init.txt |The full name of your metadata file, including file type (e.g., 'metadata_example.csv')  |
-| train-set proportion  |  init.txt |The proportion of the data used for model training |
+```
+./run_TE.sh [your_gcta_path] [count_matrix] [metadata_file] 
+
+```
+where
+
+| ARGUMENT  |DESCRIPTION |
+| ------------- | ------------- |
+| your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). In windows and ios 'gcta64' file is bin directory (in the GCTA folder). In Linux 'gcta64' is in the main directory|
+| count_matrix   |The full name of your taxa count matrix, including file type (e.g., otu_table_example.csv)  |
+| metadata_file   |The full name of your metadata file, including file type (e.g., metadata_example.csv)  |
+
 
 
 
 Example
 ---------------------------
 
-To run MTV-LMM on example data, do:
+To run MTV-LMM on example data:
 
+1. Follow steps 1 and 2 in the usage instructions above.
+2.  Execute
 
-1. Clone this repository ('MTV-LMM') and save it on your computer.
-2. Set 'dir_path' in files : E_step_1.R, TE_step_3.R to the path in which you saved the main directory  (e.g., "~/Dropbox/MTV-LMM/").
-3. Set 'gcta path' in the init.txt file to the path in which you saved GCTA  (e.g., "/Users/liatshenhav/Downloads/gcta_1.91.3beta_mac/bin/gcta64"). Otherwise, use default arguments in init.txt. 
-4. Open your terminal and navigave to the cloned repository. 
-5. Run chmod +x run_TE.sh ; chmod +x Time_explainability/TE_step_2.sh (execute permissions).
-6. Run the file 'run_TE.sh' from the main directory.
+```
+./run_TE.sh [your_gcta_path] otu_table_example.csv metadata_example.csv
+
+```
 
 
 Input - 

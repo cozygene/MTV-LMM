@@ -1,19 +1,18 @@
-# rm(list = ls())
-# gc()
+rm(list = ls())
+gc()
 
-
+args = commandArgs(trailingOnly=TRUE)
 
 dir_path = "~/MTV-LMM/MTV_LMM/"
 setwd(dir_path)
 source("src.R")
-init = read.table("init.txt")
 
 setwd(paste(dir_path, "Data_files", sep = ""))
 
 
 #Set the arguments of your data
-count_matrix = as.character(init$V1[2])
-metadata_file = as.character(init$V1[3])
+count_matrix = args[1]
+metadata_file = args[2]
 fixed_effect_flag = 0
 
 
