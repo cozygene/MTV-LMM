@@ -96,7 +96,7 @@ scaled.dat[is.na(scaled.dat)] = 0
                              "logL0", "logL", "num_taxa", "taxa_index")
     
 
-    TE_Results = TE_Results[order(TE_Results$OTU_index),]
+    TE_Results = TE_Results[order(TE_Results$taxa_index),]
     p_adjust = p.adjust(p = TE_Results$p_value, method = "BH", n = length(TE_Results$p_value))
 
 
