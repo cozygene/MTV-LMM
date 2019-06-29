@@ -1,5 +1,4 @@
-
-x<-c("vegan", "dplyr")
+x<-c("vegan")
 lapply(x, require, character.only = TRUE)
 library("vegan")
 # library("dplyr")
