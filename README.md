@@ -44,7 +44,7 @@ Ind_effect = the estimate of variance explained by the individual at previous ti
 SD_ind_effect  = the standard deviation of the Ind_effect, 
 logL0 =  log-likelihood under the null (no termpral effect), 
 logL = log-likelihood under the alternative, 
-OTU_index = the index of the focal taxa in the count matrix, 
+OTU_index = the index of the focal taxa in the count table, 
 p_value_adjusted = the FDR adjusted p-value of the log-ratio test.
 
 
@@ -67,14 +67,14 @@ chmod +x run_Prediction.sh
 4.  Execute
 
 ```
-./run_TE.sh [your_gcta_path] [count_matrix] [metadata_file] 
+./run_TE.sh [your_gcta_path] [count_table] [metadata_file] 
 ```
 where
 
 | ARGUMENT  |DESCRIPTION |
 | ------------- | ------------- |
 | your_gcta_path    |The path in which the file 'gcta64' is saved  (e.g., "~/gcta_1.91.3beta_mac/bin/gcta64"). In windows and ios 'gcta64' file is bin directory (in the GCTA folder). In Linux 'gcta64' is in the main directory|
-| count_matrix   |The full name of your taxa count matrix, including file type (e.g., otu_table_example.csv)  |
+| count_table   |The full name of your taxa count table, including file type (e.g., otu_table_example.csv)  |
 | metadata_file   |The full name of your metadata file, including file type (e.g., metadata_example.csv)  |
 
 
@@ -106,7 +106,7 @@ metadata (first 4 rows):
 
 
 
-count matrix (first 4 rows and columns):
+count table (first 4 rows and columns):
 
 | | E000823.1.8 |E000823.2.6 | E000823.4.0| E000823.5.0|
 | ------------- | ------------- |------------- |------------- |------------- |
