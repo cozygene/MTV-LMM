@@ -37,7 +37,7 @@ metadata -  The first row contains the headers ('sample_id', 'ind_id', 'Id_num',
 Output format
 -----------------------
 
-The output is a matrix of taxa and their temporal effects. Taxa is considered to be 'autorehgressive' if the Time_explainability component is significant (p_value_adjusted <= 0.05). Only qc taxa are presented (i.e., taxa that are present in at least 10% of the temporal samples).   
+The output is a matrix of taxa and their temporal effects. Taxa is considered to be 'autoregressive' if the Time_explainability component is significant (p_value_adjusted <= 0.05). Only qc taxa are presented (i.e., taxa that are present in at least 10% of the temporal samples).   
 
 | VALUE  |DESCRIPTION |
 | ------------- | ------------- |
